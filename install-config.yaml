@@ -17,6 +17,7 @@ platform:
     apiVIP: 192.168.107.6
     ingressVIP: 192.168.107.7
     dnsVIP: 192.168.107.8
+    #libvirtURI:
     hosts:
       - name: master-0
         role: master
@@ -52,3 +53,7 @@ platform:
        hardwareProfile: default
 pullSecret: '{...}'
 ssh-key: '...'
+# proxy:
+#   httpProxy: http://<username>:<pswd>@<ip>:<port> 
+#   httpsProxy: http://<username>:<pswd>@<ip>:<port> 
+#   noProxy: example.com, some.destination.com
