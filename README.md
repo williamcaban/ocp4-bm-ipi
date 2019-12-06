@@ -54,7 +54,7 @@ NOTE: The provisioning host must be RHEL8 or later as it needs a `qemu-kvm` with
 ### Overriding RHCOS Image
 If using a custom RHCOS image or using proxy configurations:
 
-- Download and publish the OpenStack QCOW image into a local web serve
+- Download and publish the RCHOS **OpenStack** QCOW image into a local web server (Yes, the OpenStack image is the one used for IPI bare-metal deployments):
     ```
     curl -O https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.3/latest/rhcos-43.81.201912030353.0-openstack.x86_64.qcow2.gz
     ```
