@@ -1,16 +1,18 @@
-# OpenShift 4.2.x Bare-Metal IPI
+# OpenShift 4.2.x/4.3.x Bare-Metal IPI
+
+- Obtain a pull-secret from https://try.openshift.com and save it as `pull-secret.json`
+- Obtain the `oc` client for your platform from https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/
 
 - Define environment variables to use during the installation:
     ```
     export PULL_SECRET="pull-secret.json"
-    export INSTALLER="openshift-baremental-install"
+    export INSTALLER="openshift-baremetal-install"
     export RELEASE_IMG=`curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest-4.2/release.txt | grep Pull | cut -f3 -d' '`
+    export EXTRACT_DIR="./"
     ```
-- Obtain a pull-secret from https://try.openshift.com and save it as `pull-secret.json`
-- Obtain the `oc` client for your platform from https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/
 - Download the bare-metal IPI installer:
     ```
-    oc adm release extract --registry-config "${PULL_SECRET}" --command=${INSTALLER} --to "${extract_dir}" ${RELEASE_IMG}
+    oc adm release extract --registry-config "${PULL_SECRET}" --command=${INSTALLER} --to ${EXTRACT_DIR} ${RELEASE_IMG}
     ```
 
 ## Preparing the Provisioning Host
@@ -43,17 +45,37 @@ NOTE: The provisioning host must be RHEL8 or later as it needs a `qemu-kvm` with
     ```
     **NOTE:** The `provisioning` network is an isolated network the Nodes will use during the provisioning stages. Configure the bridge with the network `172.22.0.0/24` and the provisioning machine with the IP `172.22.0.1`
 
-- Setup environment variables to override and specify the NIC cards used by the 
+- Setup environment variables to override and specify the NIC cards used by the installer
     ```
     export TF_VAR_external_bridge=enp130s0f0
     export TF_VAR_provisioning_bridge=eno3
     ```
 
 ## Deploying OpenShift
-
+- Create directory for the installation and copy the `install-config.yaml` there
+    ```
+    mkdir ./mycluster
+    cp ./install-config.yaml ./mycluster/install-config.yaml
+    ```
 - Deploy the cluster using the `openshift-baremetal-install` binary following the standard OCP IPI installation process:
     ```
-    ./openshift-bearemeta-install create cluster --dir ./mycluster
+    ./openshift-bearemetal-install create cluster --dir ./mycluster
+    ```
+
+## Deploying with customizations
+
+- Generate the manifests
+    ```
+    ./openshift-bearemetal-install create manifests --dir ./mycluster
+    ```
+- Update manifests with desired customziations
+- Generate new ignition files
+    ```
+    ./openshift-bearemetal-install create ignition-configs --dir ./mycluster
+    ```
+- Proceed with installation
+    ```
+    ./openshift-bearemetal-install create cluster --dir ./mycluster
     ```
 
 ## Troubleshooting
@@ -78,7 +100,7 @@ NOTE: The provisioning host must be RHEL8 or later as it needs a `qemu-kvm` with
     journalctl -u ironic
     ```
 
-- Check logs for `coreos-downloader` or `ipa-downloader` on the bootstrap node
+- Check the logs of `coreos-downloader` or `ipa-downloader` on the bootstrap node
 
 - To enable verbose logs set the `TF_LOG` environment variable:
     ```
