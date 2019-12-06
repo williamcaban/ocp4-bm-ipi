@@ -51,6 +51,20 @@ NOTE: The provisioning host must be RHEL8 or later as it needs a `qemu-kvm` with
     export TF_VAR_provisioning_bridge=eno3
     ```
 
+### Overriding RHCOS Image
+If using a custom RHCOS image or using proxy configurations:
+
+- Download and publish the OpenStack QCOW image into a local web serve
+    ```
+    curl -O https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.3/latest/rhcos-43.81.201912030353.0-openstack.x86_64.qcow2.gz
+    ```
+    NOTE1: Do not uncompress the qcow2 image as the installer is expecting it to be compressed
+    NOTE2: The OpenStack images are the ones REQUIRED for bare-metal deployment as they are the RHCOS images that are supported by the Ironic (part of the Metal3).
+- Setup the `OPENSHIFT_INSTALL_OS_IMAGE_OVERRIDE` environment variable before running the installer
+    ```
+    export OPENSHIFT_INSTALL_OS_IMAGE_OVERRIDE=http://myserver.local/rhcos-openstack.x86_64.qcow2.gz
+    ```
+
 ## Deploying OpenShift
 - Create directory for the installation and copy the `install-config.yaml` there
     ```
