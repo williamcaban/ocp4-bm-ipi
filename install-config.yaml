@@ -14,10 +14,16 @@ controlPlane:
     baremetal: {}
 platform:
   baremetal:
+    # NOTE: To override RHCOS images
+    #bootstrapOSImage: http://${MIRROR_IP}/rhcos-43.81.201912131630.0-qemu.x86_64.qcow2.gz?sha256=f40e826ac4a6c5c073416a7bc0039ec8726a338885d2031e7607cec8783e580e
+    #clusterOSImage: http://${MIRROR_IP}/rhcos-43.81.201912131630.0-openstack.x86_64.qcow2.gz?sha256=f40e826ac4a6c5c073416a7bc0039ec8726a338885d2031e7607cec8783e580e
+    # NOTE: To user remote libvirt server for the BM provisioning
+    #libvirtURI:
+
     apiVIP: 192.168.107.6
     ingressVIP: 192.168.107.7
     dnsVIP: 192.168.107.8
-    #libvirtURI:
+
     hosts:
       - name: master-0
         role: master
@@ -44,16 +50,17 @@ platform:
         bootMACAddress: AA:BB:CC:DD:EE:F3
         hardwareProfile: default
       - name: worker-0
-       role: worker
-       bmc:
-         address: ipmi://192.168.254.84
-         username: admin
-         password: password
-       bootMACAddress: AA:BB:CC:DD:EE:F4
-       hardwareProfile: default
+        role: worker
+        bmc:
+          address: ipmi://192.168.254.84
+          username: admin
+          password: password
+        bootMACAddress: AA:BB:CC:DD:EE:F4
+        hardwareProfile: default
 pullSecret: '{...}'
 ssh-key: '...'
 # proxy:
 #   httpProxy: http://<username>:<pswd>@<ip>:<port> 
 #   httpsProxy: http://<username>:<pswd>@<ip>:<port> 
 #   noProxy: example.com, some.destination.com
+

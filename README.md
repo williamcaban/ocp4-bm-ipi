@@ -73,23 +73,23 @@ If using a custom RHCOS image or using proxy configurations:
     ```
 - Deploy the cluster using the `openshift-baremetal-install` binary following the standard OCP IPI installation process:
     ```
-    ./openshift-bearemetal-install create cluster --dir ./mycluster
+    ./openshift-baremetal-install create cluster --dir ./mycluster
     ```
 
 ## Deploying with customizations
 
 - Generate the manifests
     ```
-    ./openshift-bearemetal-install create manifests --dir ./mycluster
+    ./openshift-baremetal-install create manifests --dir ./mycluster
     ```
-- Update manifests with desired customziations
+- Update manifests with desired customizations
 - Generate new ignition files
     ```
-    ./openshift-bearemetal-install create ignition-configs --dir ./mycluster
+    ./openshift-baremetal-install create ignition-configs --dir ./mycluster
     ```
 - Proceed with installation
     ```
-    ./openshift-bearemetal-install create cluster --dir ./mycluster
+    ./openshift-baremetal-install create cluster --dir ./mycluster
     ```
 
 ## Troubleshooting
