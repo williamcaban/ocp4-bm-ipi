@@ -58,7 +58,7 @@ platform:
         bootMACAddress: AA:BB:CC:DD:EE:F4
         hardwareProfile: default
 pullSecret: '{...}'
-ssh-key: '...'
+sshKey: '...'
 # proxy:
 #   httpProxy: http://<username>:<pswd>@<ip>:<port> 
 #   httpsProxy: http://<username>:<pswd>@<ip>:<port> 

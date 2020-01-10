@@ -1,3 +1,8 @@
+# **NOTE** 
+Follow the updated instructions here:
+https://github.com/openshift-kni/baremetal-deploy/blob/master/install-steps.md
+
+
 # OpenShift 4.2.x/4.3.x Bare-Metal IPI
 
 - Obtain a pull-secret from https://try.openshift.com and save it as `pull-secret.json`
